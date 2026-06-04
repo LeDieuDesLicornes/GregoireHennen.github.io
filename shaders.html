@@ -73,7 +73,7 @@
             <a href="lighting.html">Lighting</a>
         </nav>
     </header>
-
+    
     <main>
         <h3>Here are my Shaders</h3>
 
@@ -175,7 +175,7 @@ color *= (<span class="c-var">1.0</span> - flicker);</code></pre>
             </div>
         </details>
 
-        <details class="shader-accordion" open>
+       <details class="shader-accordion" open>
             <summary>Shader: Procedural Outline & Hatching (Shader Graph / HDRP)</summary>
             <div class="shader-content">
                 
@@ -210,10 +210,10 @@ color *= (<span class="c-var">1.0</span> - flicker);</code></pre>
                         <h4 style="color: #00adb5; margin-top:0;">2. Edge Softness & Clean Masking</h4>
                         <p>To prevent the lines from looking pixelated or overly sharp, the pattern is passed through a <code>Smoothstep</code> node.</p>
                         <p>The interpolation bounds are driven by calculations using <code>_LineWidth</code> and <code>_LineEdgeSoftness</code>. This ensures smooth anti-aliased transitions before the color is injected.</p>
-                        <img src="ShaderGraph_Step2_Smoothstep.png" style="width: 100%; border-radius: 6px; margin-top: 10px;" alt="Smoothstep Masking">
+                        <p style="font-style: italic; color: #888; font-size: 0.95em; margin-top: 15px;">Mathematical inputs map the line edges relative to the softness variable, granting precise art-direction control over the anime style.</p>
                     </div>
-                    <div class="tech-row" style="margin: 0; padding: 0; background: none; border: none;">
-                        <p style="font-style: italic; color: #888; font-size: 0.9em;">Mathematical inputs map the line edges relative to the softness variable, granting precise art-direction control over the anime style.</p>
+                    <div class="tech-code" style="background: none; border: none; padding: 0;">
+                        <img src="ShaderGraph_Step2_Smoothstep.png" style="width: 100%; border-radius: 6px;" alt="Smoothstep Masking">
                     </div>
                 </div>
 
@@ -230,5 +230,7 @@ color *= (<span class="c-var">1.0</span> - flicker);</code></pre>
         </details>
     </main>
 
+</body>
+</html>
 </body>
 </html>
