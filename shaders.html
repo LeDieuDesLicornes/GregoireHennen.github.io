@@ -33,10 +33,10 @@
             align-items: center;
         }
         .tech-desc {
-            flex: 1; /* Prend la moitié de la place */
+            flex: 1;
         }
         .tech-code {
-            flex: 1; /* Prend l'autre moitié */
+            flex: 1;
             background-color: #0d1117;
             padding: 15px;
             border-radius: 6px;
@@ -47,13 +47,17 @@
         /* Style des balises de code */
         pre { margin: 0; }
         code { font-family: 'Consolas', 'Courier New', Courier, monospace; color: #ff79c6; font-size: 0.9em; }
-        .c-comment { color: #8b949e; } /* Couleur des commentaires */
-        .c-keyword { color: #ff7b72; } /* Couleur des mots clés */
-        .c-var { color: #79c0ff; }     /* Couleur des variables */
+        .c-comment { color: #8b949e; }
+        .c-keyword { color: #ff7b72; }
+        .c-var { color: #79c0ff; }
 
         /* Ajustement des images globales */
-        .global-gifs { display: flex; gap: 20px; justify-content: center; margin-bottom: 30px; }
+        .global-gifs { display: flex; gap: 20px; justify-content: center; margin-bottom: 20px; }
         .global-gifs img { width: 48%; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        
+        /* Style pour l'image de paramètres centrée */
+        .settings-img-container { text-align: center; margin: 20px 0 30px 0; }
+        .settings-img-container img { max-width: 100%; width: 700px; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
@@ -84,7 +88,12 @@
                     <img src="AllpostProcessB&W.gif" alt="Rendu Noir et Blanc">
                     <img src="AllPostProcessNoB&W.gif" alt="Rendu Couleur">
                 </div>
-                <img src="AllPostProcessNoB&W.gif" alt="Rendu Couleur">
+                
+                <div class="settings-img-container">
+                    <p style="color: #00adb5; font-weight: bold; margin-bottom: 10px;">Interface utilisateur et paramètres éditables de l'effet dans Unity :</p>
+                    <img src="ImagePostProcessOldTV.png" alt="Paramètres du Post Process Old TV">
+                </div>
+                
                 <hr style="border: 0; border-top: 1px solid #333; margin: 40px 0;">
 
                 <div class="tech-row">
@@ -140,7 +149,7 @@ color *= (<span class="c-var">1.0</span> - flicker);</code></pre>
 <span class="c-keyword">if</span> (randCol > <span class="c-var">0.997</span>) { 
     <span class="c-comment">// Calcul de la longueur et de l'épaisseur</span>
     <span class="c-keyword">float</span> xSub = frac(gridX) - <span class="c-var">0.5</span>;
-    <span class="c-keyword">float</span> lineProfile = pow(saturate(<span class="c-var">1.0</span> - abs(xSub) * <span class="c-var">2.0</span>), thicknessPower);
+    <span class="c-keyword">float</span> lineProfile = pow(saturate(<span class="c-var">1.0</span> - abs(xSub) * <span class="var">2.0</span>), thicknessPower);
     scratchLine = lineProfile * withinLine * _ScratchIntensity;
 }</code></pre>
                     </div>
