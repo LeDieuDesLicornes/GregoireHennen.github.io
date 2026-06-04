@@ -1,15 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gregoire Hennen - Tech Artist</title>
+    <style>
+        /* Un style de base pour tout centrer et faire un menu propre */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            padding: 40px 20px;
+            background-color: #111111;
+        }
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+        h2 {
+            margin: 0 0 20px 0;
+            color: #00adb5;
+            font-weight: 400;
+        }
+        /* Style de la barre de navigation (les boutons) */
+        nav {
+            margin-top: 20px;
+        }
+        nav a {
+            display: inline-block;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: 2px solid #00adb5;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #00adb5;
+            color: #1a1a1a;
+        }
+        /* Style du contenu principal */
+        main {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Gregoire Hennen</h1>
-    <h2>Technical Artist</h2>
 
-    <p>Bienvenue sur mon portfolio.</p>
+    <header>
+        <h1>Gregoire Hennen</h1>
+        <h2>Technical Artist</h2>
+        
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="vfx.html">VFX</a>
+            <a href="shaders.html">Shaders</a>
+            <a href="tools.html">Tools</a>
+            <a href="scripts.html">Scripts</a>
+            <a href="lighting.html">Lighting</a>
+        </nav>
+    </header>
 
-    <h3>Game Jam</h3>
-    <p>Présentation de mes outils, shaders et VFX réalisés durant la jam.</p>
+    <main>
+        <h3>Bienvenue sur mon portfolio</h3>
+        <p>Présentation de mes outils, shaders et VFX réalisés durant la jam de 3 semaines.</p>
+        </main>
+
 </body>
 </html>
