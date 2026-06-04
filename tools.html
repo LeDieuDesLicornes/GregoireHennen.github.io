@@ -12,10 +12,44 @@
         nav { margin-top: 20px; }
         nav a { display: inline-block; color: #ffffff; text-decoration: none; padding: 10px 20px; margin: 0 10px; border: 2px solid #00adb5; border-radius: 5px; font-weight: bold; transition: all 0.3s ease; }
         nav a:hover { background-color: #00adb5; color: #1a1a1a; }
-        main { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        main { max-width: 1000px; margin: 40px auto; padding: 0 20px; text-align: left; }
+
+        h3 { text-align: center; margin-bottom: 30px; }
+
+        /* Accordion Style */
+        .tool-accordion { margin-bottom: 15px; border: 1px solid #333; border-radius: 8px; overflow: hidden; background-color: #222222; }
+        .tool-accordion summary { padding: 20px; font-size: 1.3em; font-weight: bold; color: #00adb5; cursor: pointer; list-style: none; position: relative; transition: background 0.3s ease; }
+        .tool-accordion summary:hover { background-color: #2b2b2b; }
+        .tool-accordion summary::after { content: '▼'; position: absolute; right: 20px; color: #00adb5; transition: transform 0.3s ease; }
+        .tool-accordion[open] summary::after { transform: rotate(180deg); }
+        
+        .tool-content { padding: 20px; border-top: 1px solid #333; background-color: #1c1c1c; }
+
+        /* Table Style */
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background-color: #111; border-radius: 6px; overflow: hidden; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #333; }
+        th { background-color: #00adb5; color: #1a1a1a; font-weight: bold; }
+
+        /* Side by Side Layout */
+        .tech-row { display: flex; gap: 25px; margin: 30px 0; align-items: center; }
+        .tech-desc { flex: 1; }
+        .tech-code { flex: 1; background-color: #0d1117; padding: 15px; border-radius: 6px; overflow-x: auto; border: 1px solid #30363d; }
+        
+        pre { margin: 0; }
+        code { font-family: 'Consolas', 'Courier New', Courier, monospace; color: #ff79c6; font-size: 0.9em; }
+        .c-keyword { color: #ff7b72; }
+        .c-var { color: #79c0ff; }
+
+        .center-img-container { text-align: center; margin: 25px 0; }
+        .center-img-container img { max-width: 100%; width: 700px; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        
+        .bullet-list { padding-left: 20px; line-height: 1.6; }
+        .bullet-list li { margin-bottom: 8px; }
+        .highlight { color: #00adb5; font-weight: bold; }
     </style>
 </head>
 <body>
+
     <header>
         <h1>Gregoire Hennen</h1>
         <h2>Technical Artist</h2>
@@ -28,9 +62,119 @@
             <a href="lighting.html">Lighting</a>
         </nav>
     </header>
+    
     <main>
         <h3>Voici mes Tools</h3>
-        <p>Présentation des outils éditeurs et pipelines développés pour faire gagner du temps à l'équipe.</p>
+        <p style="text-align: center; color: #aaa; margin-bottom: 40px;">Présentation des outils éditeurs et pipelines développés pour faire gagner du temps à l'équipe.</p>
+
+        <details class="tool-accordion">
+            <summary>Générateur de Texture 3D Procédurale (Unity Editor / C#)</summary>
+            <div class="tool-content">
+                
+                <p style="font-size: 1.1em; color: #aaa; text-align: center;">Développement d'un outil personnalisé sous forme d'assistant éditeur permettant de générer instantanément des assets de textures 3D volumétriques basés sur du bruit procédural.</p>
+
+                <div class="center-img-container">
+                    <img src="unity-texture3d-preview.png" alt="Visualisation de la texture 3D dans Unity">
+                    <p style="color: #888; font-size: 0.9em; margin-top: 5px;">Visualisation tridimensionnelle du volume de bruit généré dans l'Inspecteur</p>
+                </div>
+
+                <h4 style="color: #00adb5; border-bottom: 1px solid #333; padding-bottom: 5px;">Objectif & Intégration</h4>
+                <p>L'objectif principal de cet outil est d'éviter la création ou l'importation manuelle de textures volumétriques complexes depuis des logiciels tiers, offrant une solution rapide pour tester différentes résolutions et fréquences directement dans Unity.</p>
+                
+                <ul class="bullet-list">
+                    <li><span class="highlight">Unity Editor :</span> Fenêtre personnalisée (`EditorWindow`) intégrée nativement dans l'interface de développement.</li>
+                    <li><span class="highlight">Unity Mathematics :</span> Exploitation de la bibliothèque mathématique pour générer un bruit Simplex 3D optimisé via <code>noise.snoise()</code>.</li>
+                </ul>
+
+                <h4 style="color: #00adb5; border-bottom: 1px solid #333; padding-bottom: 5px; margin-top: 30px;">Configuration de la Fenêtre Éditeur</h4>
+                <p>L'outil est accessible depuis le menu supérieur de Unity : <span class="highlight">Tools → Générer Texture 3D Noise</span>. L'utilisateur fait ses réglages via trois paramètres principaux :</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Paramètre</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="highlight">Size</td>
+                            <td>Résolution cubique de la texture sur les trois axes (X, Y, Z). ex: 32³, 64³, 128³.</td>
+                        </tr>
+                        <tr>
+                            <td class="highlight">Frequency</td>
+                            <td>Ajuste l'échelle et la répétition du motif du bruit dans l'espace 3D.</td>
+                        </tr>
+                        <tr>
+                            <td class="highlight">File Name</td>
+                            <td>Nom donné à l'asset final qui sera sauvegardé dans le projet.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="center-img-container">
+                    <img src="tool-ui-3dnoise.png" alt="Interface utilisateur de l'outil de génération">
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid #333; margin: 40px 0;">
+
+                <div class="tech-row">
+                    <div class="tech-desc">
+                        <h4 style="color: #00adb5; margin-top:0;">1. Initialisation du conteneur Texture3D</h4>
+                        <p>Le script instancie un conteneur <code>Texture3D</code> vide basé sur la taille demandée. Le format choisi est du <strong>RGBA32</strong>. Pour garantir des transitions fluides et répétables, le mode de filtrage est forcé en Bilinéaire et le WrapMode est configuré sur Repeat.</p>
+                    </div>
+                    <div class="tech-code">
+<pre><code><span class="c-keyword">Texture3D</span> texture = <span class="c-keyword">new</span> Texture3D(size, size, size, TextureFormat.RGBA32, <span class="c-var">false</span>);
+texture.wrapMode = TextureWrapMode.Repeat;
+texture.filterMode = FilterMode.Bilinear;</code></pre>
+                    </div>
+                </div>
+
+                <div class="tech-row">
+                    <div class="tech-desc">
+                        <h4 style="color: #00adb5; margin-top:0;">2. Échantillonnage Simplex Mathématique</h4>
+                        <p>À travers trois boucles imbriquées (X, Y, Z), le script calcule la position normalisée de chaque voxel. La fonction <code>snoise()</code> renvoie des données comprises entre -1 et 1.</p>
+                        <p>Une opération de remappage mathématique standard convertit ces données dans l'intervalle [0 ; 1] afin de les appliquer proprement sous forme de niveaux de gris.</p>
+                    </div>
+                    <div class="tech-code">
+<pre><code><span class="c-keyword">float3</span> pos = <span class="c-keyword">new</span> float3(x, y, z) / (<span class="c-keyword">float</span>)size * frequency;
+<span class="c-keyword">float</span> noiseValue = (noise.snoise(pos) + <span class="c-var">1f</span>) * <span class="c-var">0.5f</span>;
+
+colors[index] = <span class="c-keyword">new</span> Color(noiseValue, noiseValue, noiseValue, <span class="c-var">1f</span>);</code></pre>
+                    </div>
+                </div>
+
+                <div class="tech-row">
+                    <div class="tech-desc">
+                        <h4 style="color: #00adb5; margin-top:0;">3. Écriture des données et focus UX</h4>
+                        <p>Une fois le tableau de pixels traité, la texture est finalisée avec <code>Apply()</code>. L'outil génère l'asset physique dans le dossier du projet via l'<code>AssetDatabase</code>.</p>
+                        <p>Pour maximiser le confort d'utilisation, l'outil force la sélection active de l'asset créé afin qu'il s'affiche instantanément dans l'inspecteur.</p>
+                    </div>
+                    <div class="tech-code">
+<pre><code>texture.SetPixels(colors);
+texture.Apply();
+
+<span class="c-keyword">AssetDatabase</span>.CreateAsset(texture, path);
+<span class="c-keyword">AssetDatabase</span>.SaveAssets();
+
+<span class="c-keyword">Selection</span>.activeObject = texture;</code></pre>
+                    </div>
+                </div>
+
+                <div class="center-img-container">
+                    <img src="tool-generation-demo.gif" alt="Démonstration animée de la génération d'asset">
+                    <p style="color: #888; font-size: 0.9em; margin-top: 5px;">Processus de génération en un clic et focus immédiat sur la ressource</p>
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid #333; margin: 40px 0;">
+
+                <h4 style="color: #00adb5; margin-top:30px;">Analyse Technique & Évolution</h4>
+                <p>Cet outil offre un workflow idéal pour créer des variantes en quelques secondes. Néanmoins, l'exécution s'effectuant sur le <strong>CPU</strong>, le temps d'attente s'élève rapidement lors de résolutions supérieures (ex: 256³).</p>
+                <p style="font-style: italic; color: #aaa;">Note d'évolution : Le projet ayant migré vers un pipeline n'exploitant plus ce type de ressource, le développement a été suspendu. Une future itération aurait consisté à basculer la logique mathématique sur le GPU à l'aide d'un Compute Shader et d'y ajouter des bruits de type Worley ou FBM (Fractal Brownian Motion).</p>
+
+            </div>
+        </details>
     </main>
+
 </body>
 </html>
