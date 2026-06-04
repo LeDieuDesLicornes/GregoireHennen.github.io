@@ -12,70 +12,48 @@
         nav { margin-top: 20px; }
         nav a { display: inline-block; color: #ffffff; text-decoration: none; padding: 10px 20px; margin: 0 10px; border: 2px solid #00adb5; border-radius: 5px; font-weight: bold; transition: all 0.3s ease; }
         nav a:hover { background-color: #00adb5; color: #1a1a1a; }
-        main { max-width: 800px; margin: 40px auto; padding: 0 20px; text-align: left; } /* Aligné à gauche pour le contenu des shaders */
+        main { max-width: 1000px; margin: 40px auto; padding: 0 20px; text-align: left; }
 
         h3 { text-align: center; margin-bottom: 30px; }
 
-        /* --- STYLE DES ACCORDÉONS --- */
-        .shader-accordion {
-            margin-bottom: 15px;
-            border: 1px solid #333;
-            border-radius: 8px;
-            overflow: hidden;
-            background-color: #222222;
-        }
+        /* Style des accordéons */
+        .shader-accordion { margin-bottom: 15px; border: 1px solid #333; border-radius: 8px; overflow: hidden; background-color: #222222; }
+        .shader-accordion summary { padding: 20px; font-size: 1.3em; font-weight: bold; color: #00adb5; cursor: pointer; list-style: none; position: relative; transition: background 0.3s ease; }
+        .shader-accordion summary:hover { background-color: #2b2b2b; }
+        .shader-accordion summary::after { content: '▼'; position: absolute; right: 20px; color: #00adb5; transition: transform 0.3s ease; }
+        .shader-accordion[open] summary::after { transform: rotate(180deg); }
+        
+        .shader-content { padding: 20px; border-top: 1px solid #333; background-color: #1c1c1c; }
 
-        /* La balise <summary> sert de bouton cliquable */
-        .shader-accordion summary {
-            padding: 20px;
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #00adb5;
-            cursor: pointer;
-            list-style: none; /* Enlève la flèche moche par défaut */
-            position: relative;
-            transition: background 0.3s ease;
+        /* Mise en page Côte à Côte (Flexbox) */
+        .tech-row {
+            display: flex;
+            gap: 25px;
+            margin: 30px 0;
+            align-items: center;
         }
-
-        .shader-accordion summary:hover {
-            background-color: #2b2b2b;
+        .tech-desc {
+            flex: 1; /* Prend la moitié de la place */
         }
-
-        /* Petite flèche stylisée à droite */
-        .shader-accordion summary::after {
-            content: '▼';
-            position: absolute;
-            right: 20px;
-            color: #00adb5;
-            transition: transform 0.3s ease;
-        }
-
-        /* Quand l'accordéon est ouvert, la flèche pivote */
-        .shader-accordion[open] summary::after {
-            transform: rotate(180deg);
-        }
-
-        /* Zone de contenu à l'intérieur */
-        .shader-content {
-            padding: 20px;
-            border-top: 1px solid #333;
-            background-color: #1c1c1c;
-            text-align: center; /* On recentre les images et textes internes */
-        }
-
-        .shader-content p {
-            text-align: left; /* Texte descriptif aligné à gauche pour la lecture */
-            color: #dddddd;
-            margin: 15px 0 5px 0;
-        }
-
-        .shader-content img {
-            max-width: 100%;
-            width: 700px;
+        .tech-code {
+            flex: 1; /* Prend l'autre moitié */
+            background-color: #0d1117;
+            padding: 15px;
             border-radius: 6px;
-            margin: 10px 0 20px 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            overflow-x: auto;
+            border: 1px solid #30363d;
         }
+        
+        /* Style des balises de code */
+        pre { margin: 0; }
+        code { font-family: 'Consolas', 'Courier New', Courier, monospace; color: #ff79c6; font-size: 0.9em; }
+        .c-comment { color: #8b949e; } /* Couleur des commentaires */
+        .c-keyword { color: #ff7b72; } /* Couleur des mots clés */
+        .c-var { color: #79c0ff; }     /* Couleur des variables */
+
+        /* Ajustement des images globales */
+        .global-gifs { display: flex; gap: 20px; justify-content: center; margin-bottom: 30px; }
+        .global-gifs img { width: 48%; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
@@ -96,42 +74,109 @@
     <main>
         <h3>Voici mes Shaders</h3>
 
-        <details class="shader-accordion">
-            <summary>Post-Process : Filtre Vieux Cinéma (HLSL)</summary>
+        <details class="shader-accordion" open>
+            <summary>Post-Process : Filtre Vieux Cinéma (HLSL / HDRP)</summary>
             <div class="shader-content">
-                <p>J'ai créé un postprocess en HLSL qui simule le rendu d'une vieille pellicule de cinéma avec plusieurs options modulables.</p>
                 
-                <div style="display: flex; gap: 20px; justify-content: center; max-width: 700px; margin: 0 auto 20px auto;">
-                    <img src="AllpostProcessB&W.gif" alt="Rendu global Noir et Blanc" style="width: 50%; margin: 0; max-width: 100%;">
-                    <img src="AllPostProcessNoB&W.gif" alt="Rendu global Couleur" style="width: 50%; margin: 0; max-width: 100%;">
+                <p style="text-align: center; font-size: 1.1em; color: #aaa;">J'ai développé un shader de Post-Process personnalisé sous Unity HDRP permettant de recréer l'esthétique d'une pellicule de cinéma vintage dégradée.</p>
+                
+                <div class="global-gifs">
+                    <img src="AllpostProcessB&W.gif" alt="Rendu Noir et Blanc">
+                    <img src="AllPostProcessNoB&W.gif" alt="Rendu Couleur">
                 </div>
-                
-                <p><strong>Effet de Grain :</strong> Ajout d'un bruit procédural dynamique sur l'écran.</p>
-                <img src="GrainPostProcessing.gif" alt="Effet de grain">
-                
-                <p><strong>Effet de Rayures :</strong> Simulation de lignes verticales aléatoires pour imiter l'usure du film.</p>
-                <img src="RayuresPostProcess.gif" alt="Effet de rayures">
-                
-                <p><strong>Flickering :</strong> Variation de l'intensité de la lumière à haute fréquence.</p>
-                <img src="FlickeringPostProcess.gif" alt="Effet Flickering">
-                
-                <p><strong>Mode Noir & Blanc :</strong> Option pour désaturer complètement la scène tout en gardant le contraste.</p>
-                <img src="BlackAndWhitPostProcess.png" alt="Mode Noir et Blanc">
+
+                <hr style="border: 0; border-top: 1px solid #333; margin: 40px 0;">
+
+                <div class="tech-row">
+                    <div class="tech-desc">
+                        <h4 style="color: #00adb5; margin-top:0;">1. Conversion Noir & Blanc</h4>
+                        <p>Le shader calcule d'abord la luminance de la scène à l'aide d'un produit scalaire (dot product) avec les coefficients standards de perception visuelle (Rec. 601).</p>
+                        <p>Une simple condition basée sur une variable float (`_IsBlackAndWhite`) permet d'activer ou de désactiver dynamiquement le mode.</p>
+                        <img src="BlackAndWhitPostProcess.png" style="width: 100%; border-radius: 6px; margin-top: 10px;" alt="Aperçu N&B">
+                    </div>
+                    <div class="tech-code">
+<pre><code><span class="c-comment">// 1. Image de base & Conversion</span>
+<span class="c-keyword">float3</span> color = SAMPLE_TEXTURE2D_X(_InputTexture, sampler_InputTexture, uv).rgb;
+
+<span class="c-keyword">if</span>(_IsBlackAndWhite > <span class="c-var">0.5</span>) {
+    <span class="c-keyword">float</span> lum = dot(color, <span class="c-keyword">float3</span>(<span class="c-var">0.299</span>, <span class="c-var">0.587</span>, <span class="c-var">0.114</span>));
+    color = <span class="c-keyword">float3</span>(lum, lum, lum);
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="tech-row">
+                    <div class="tech-desc">
+                        <h4 style="color: #00adb5; margin-top:0;">2. Effet de Flicker (Saut de lumière)</h4>
+                        <p>Pour simuler les variations d'intensité lumineuse d'un vieux projecteur, j'utilise une fonction de hachage (`hash`) basée sur le temps.</p>
+                        <p>L'utilisation de la fonction `floor()` permet de bloquer le bruit sur des paliers nets. La fonction `pow()` accentue la rareté et la brutalité des baisses de lumière selon la variable `_FlickerSharpness` choisie par l'utilisateur.</p>
+                        <img src="FlickeringPostProcess.gif" style="width: 100%; border-radius: 6px; margin-top: 10px;" alt="Aperçu Flicker">
+                    </div>
+                    <div class="tech-code">
+<pre><code><span class="c-comment">// 2. EFFET DE FLICKER</span>
+<span class="c-keyword">float</span> rawNoise = hash(<span class="c-keyword">float2</span>(floor(time * _FlickerSpeed), <span class="c-var">123.45</span>));
+
+<span class="c-keyword">float</span> flickerNoise = pow(rawNoise, _FlickerSharpness); 
+<span class="c-keyword">float</span> flicker = flickerNoise * _FlickerIntensity;
+
+color *= (<span class="c-var">1.0</span> - flicker);</code></pre>
+                    </div>
+                </div>
+
+                <div class="tech-row">
+                    <div class="tech-desc">
+                        <h4 style="color: #00adb5; margin-top:0;">3. Génération de Rayures Procedurales</h4>
+                        <p>Les rayures verticales de la pellicule sont créées en découpant l'écran en colonnes via une grille UV unidimensionnelle (`gridX`).</p>
+                        <p>Si une colonne passe le test de probabilité aléatoire, une ligne est tracée. On génère ensuite des interruptions horizontales via un `breakModifier` pour éviter d'avoir de bêtes lignes continues et droites. Enfin, l'effet applique soit une ombre portée (rayure noire), soit une brûlure (rayure blanche).</p>
+                        <img src="RayuresPostProcess.gif" style="width: 100%; border-radius: 6px; margin-top: 10px;" alt="Aperçu Rayures">
+                    </div>
+                    <div class="tech-code">
+<pre><code><span class="c-comment">// 3. EXTRAIT DES RAYURES</span>
+<span class="c-keyword">float</span> scratchTime = floor(time * _ScratchSpeed);
+<span class="c-keyword">float</span> gridX = uv.x * (_ScratchResolution * <span class="c-var">5.0</span>); 
+<span class="c-keyword">float</span> cellX = floor(gridX);
+<span class="c-keyword">float</span> randCol = hash(<span class="c-keyword">float2</span>(cellX, scratchTime));
+
+<span class="c-keyword">if</span> (randCol > <span class="c-var">0.997</span>) { 
+    <span class="c-comment">// Calcul de la longueur et de l'épaisseur</span>
+    <span class="c-keyword">float</span> xSub = frac(gridX) - <span class="c-var">0.5</span>;
+    <span class="c-keyword">float</span> lineProfile = pow(saturate(<span class="c-var">1.0</span> - abs(xSub) * <span class="c-var">2.0</span>), thicknessPower);
+    scratchLine = lineProfile * withinLine * _ScratchIntensity;
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="tech-row">
+                    <div class="tech-desc">
+                        <h4 style="color: #00adb5; margin-top:0;">4. Grains & Poussières de Lentille</h4>
+                        <p>Au lieu d'utiliser une texture de bruit en boucle, le grain est entièrement mathématique et procédural.</p>
+                        <p>Il tourne sur un algorithme de bruit cellulaire à l'aide d'une double boucle `for` qui vérifie les cellules voisines. Cela permet de générer des micro-points et des agrégats de poussière uniques à chaque frame, assurant une dynamique ultra-réaliste.</p>
+                        <img src="GrainPostProcessing.gif" style="width: 100%; border-radius: 6px; margin-top: 10px;" alt="Aperçu Grain">
+                    </div>
+                    <div class="tech-code">
+<pre><code><span class="c-comment">// 4. BOUCLE DU BRUIT CELLULAIRE</span>
+<span class="c-keyword">for</span>(<span class="c-keyword">int</span> y=-1; y&lt;=1; y++) {
+    <span class="c-keyword">for</span>(<span class="c-keyword">int</span> x=-1; x&lt;=1; x++) {
+        <span class="c-keyword">float2</span> neighbor = <span class="c-keyword">float2</span>(x, y);
+        <span class="c-keyword">float2</span> cell = i_uv + neighbor;
+        <span class="c-comment">// Calcul des positions de grains aléatoires...</span>
+        dots += pow(saturate(<span class="c-var">1.0</span> - dist * (<span class="c-var">1.0</span> / _GrainSize)), _GrainSharpness);
+    }
+}</code></pre>
+                    </div>
+                </div>
+
             </div>
         </details>
 
         <details class="shader-accordion">
             <summary>Shader : Outline / Dessin (Cel-Shading)</summary>
             <div class="shader-content">
-                <p>Voici mon shader d'outline personnalisé. Il utilise les normales de la scène et la texture de profondeur (Depth Buffer) pour tracer des contours nets autour des objets.</p>
-                
-                <img src="OutlineRender.gif" alt="Rendu Outline final">
-                
-                <p>Idéal pour donner un effet cel-shading ou bande dessinée à tes productions.</p>
+                <p>Projet suivant à documenter de la même manière...</p>
             </div>
         </details>
 
-        </main>
+    </main>
 
 </body>
 </html>
