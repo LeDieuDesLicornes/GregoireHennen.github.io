@@ -149,11 +149,8 @@ public void RaiseBreaker()
                             This keeps the look art-directable directly from the Inspector without having to create several different materials for timing variations.
                         </p>
                     </div>
-                    <div class="tech-code">
-<pre><code class="language-cpp">
-// Key idea
-// Particle Color -> Trail Color -> Shader Vertex Color
-// The same gradient controls intensity and alpha fade.</code></pre>
+                   
+
                     </div>
                 </div>
 
@@ -172,13 +169,7 @@ public void RaiseBreaker()
                             This makes the shader lightweight and easy to reuse for other electric effects: the texture defines the lightning shape, while the Particle System controls color, intensity and disappearance.
                         </p>
                     </div>
-                    <div class="tech-code">
-<pre><code class="language-cpp">
-// Shader Graph logic
-FinalColor = LightningTexture.rgb * VertexColor.rgb;
-FinalAlpha = LightningTexture.a * VertexColor.a;
-Emission   = FinalColor * EmissionTint;</code></pre>
-                    </div>
+                   
                 </div>
 
                 <div class="center-img-container">
