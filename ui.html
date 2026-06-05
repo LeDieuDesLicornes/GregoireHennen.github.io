@@ -34,24 +34,9 @@
             This section presents the complete UI framework I developed in Unity: animated menu panels, pause-state logic, quest display behavior, persistent audio and graphics settings, input-device detection, and gamepad icon data mapping.
         </p>
 
-        <section class="ui-hero">
-            <div class="ui-hero-text">
-                <h4>Why a dedicated UI category?</h4>
-                <p>
-                    The UI scripts are not isolated helper scripts: they form a complete player-facing system. The menu manager controls the global state flow, while specialized settings managers handle audio, graphics, input sensitivity, control display, and persistent preferences.
-                </p>
-                <p>
-                    I separated this work from the general gameplay scripts because the UI layer has its own architecture, iteration constraints, UX feedback, animation timing, and save/load responsibilities.
-                </p>
-            </div>
-            <div class="ui-hero-media">
-                <img src="ui-overview-menu.gif" alt="Complete UI menu overview">
-                <p>Suggested media: full navigation demo through Menu, Settings, Pause and Quest panels.</p>
-            </div>
-        </section>
 
         <details class="ui-accordion" open>
-            <summary>Main Menu Manager: Global UI State Machine</summary>
+            <summary>Main Menu Manager</summary>
             <div class="ui-content">
 
                 <p class="section-lead">
