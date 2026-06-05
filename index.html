@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shaders - Gregoire Hennen</title>
-    
+    <title>Accueil - Gregoire Hennen</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,18 +24,145 @@
     </header>
 
     <main>
-        <h3>Bienvenue sur mon portfolio</h3>
-        <p>Présentation de mes outils, shaders et VFX réalisés durant la jam de 3 semaines.</p>
-        </main>
-<script>
-    // Récupère le nom de la page actuelle (ex: "shaders.html")
-    const currentPage = window.location.pathname.split("/").pop();
+        <section class="home-hero">
+            <div class="home-hero-glow"></div>
+            <div class="home-hero-content">
+                <p class="home-kicker">Projet de jam - 3 semaines</p>
+                <h3>Portfolio Technical Art</h3>
+                <p class="home-intro">
+                    Pendant ce projet, j'ai travaillé sur plusieurs aspects techniques et artistiques du jeu : VFX, shaders, post-processing, lighting, intégration UI, scripting, optimisation et intégration d'assets. Mon rôle était de renforcer la lisibilité du gameplay tout en améliorant l'ambiance visuelle et la cohérence globale du projet.
+                </p>
+                <div class="home-tags">
+                    <span>Unity</span>
+                    <span>VFX Graph</span>
+                    <span>Shader Graph</span>
+                    <span>HDRP</span>
+                    <span>Technical Art</span>
+                </div>
+            </div>
+        </section>
 
-    // Sélectionne tous les liens dans la nav
+        <section class="home-overview">
+            <div class="home-section-title">
+                <h4>Ce que j'ai réalisé sur le projet</h4>
+                <p>Un résumé clair des principales responsabilités que j'ai prises pendant la production.</p>
+            </div>
+
+            <div class="home-card-grid">
+                <article class="home-card featured-card">
+                    <div class="home-card-icon">⚡</div>
+                    <h5>VFX gameplay</h5>
+                    <p>
+                        Création de plusieurs effets visuels pour renforcer les feedbacks du joueur : effet électrique sur les disjoncteurs, fumée quand le monstre est flashé, et effets liés à la machine chargée à 100%.
+                    </p>
+                </article>
+
+                <article class="home-card">
+                    <div class="home-card-icon">◈</div>
+                    <h5>Shaders</h5>
+                    <p>
+                        Mise en place de shaders et matériaux spécifiques pour soutenir les VFX et certains rendus du jeu, avec une logique pensée pour rester modulable et réutilisable.
+                    </p>
+                </article>
+
+                <article class="home-card">
+                    <div class="home-card-icon">▣</div>
+                    <h5>Post-processing</h5>
+                    <p>
+                        Travail sur l'apparence globale de l'image, notamment avec des effets de post-process pour renforcer l'ambiance du jeu et donner une direction visuelle plus marquée.
+                    </p>
+                </article>
+
+                <article class="home-card">
+                    <div class="home-card-icon">⌘</div>
+                    <h5>Scripting</h5>
+                    <p>
+                        Développement de scripts simples mais utiles pour connecter les systèmes entre eux, déclencher certains VFX au bon moment et faciliter l'intégration dans Unity.
+                    </p>
+                </article>
+
+                <article class="home-card">
+                    <div class="home-card-icon">☰</div>
+                    <h5>Intégration UI</h5>
+                    <p>
+                        Intégration de l'interface utilisateur, gestion des menus, paramètres, feedbacks visuels et comportements nécessaires pour rendre l'expérience plus claire pour le joueur.
+                    </p>
+                </article>
+
+                <article class="home-card">
+                    <div class="home-card-icon">◆</div>
+                    <h5>Intégration d'assets</h5>
+                    <p>
+                        Intégration générale de certains assets dans le projet, adaptation dans la scène, réglages visuels et cohérence avec l'ambiance globale du jeu.
+                    </p>
+                </article>
+
+                <article class="home-card">
+                    <div class="home-card-icon">☠</div>
+                    <h5>Animations du monstre</h5>
+                    <p>
+                        Intégration des animations du monstre afin de connecter ses réactions au gameplay, notamment lorsque le joueur le flash avec la lampe.
+                    </p>
+                </article>
+
+                <article class="home-card">
+                    <div class="home-card-icon">▱</div>
+                    <h5>Optimisation</h5>
+                    <p>
+                        Optimisation de la scène avec la création de LOD sur les meshes et la mise en place du culling sur la map pour améliorer les performances.
+                    </p>
+                </article>
+
+                <article class="home-card featured-card">
+                    <div class="home-card-icon">✦</div>
+                    <h5>Lighting & ambiance</h5>
+                    <p>
+                        Mise en place complète des lights et de l'ambiance du jeu. L'objectif était de guider le regard du joueur, soutenir la direction horrifique et rendre les espaces plus lisibles.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="home-pipeline">
+            <div class="home-section-title">
+                <h4>Mon approche Technical Artist</h4>
+                <p>Relier l'intention artistique, les contraintes techniques et le besoin de feedback gameplay.</p>
+            </div>
+
+            <div class="home-flow">
+                <div class="home-flow-step">
+                    <span>01</span>
+                    <strong>Gameplay</strong>
+                    <p>Identifier ce que le joueur doit comprendre immédiatement.</p>
+                </div>
+                <div class="home-flow-line"></div>
+                <div class="home-flow-step">
+                    <span>02</span>
+                    <strong>Visuel</strong>
+                    <p>Créer un effet, une lumière ou une interface qui rend l'action lisible.</p>
+                </div>
+                <div class="home-flow-line"></div>
+                <div class="home-flow-step">
+                    <span>03</span>
+                    <strong>Technique</strong>
+                    <p>Intégrer proprement dans Unity avec des réglages simples à modifier.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="home-summary-panel">
+            <h4>Résumé du rôle</h4>
+            <p>
+                Sur ce projet, je me suis occupé d'une grande partie de l'habillage technique du jeu : effets visuels, shaders, post-processing, UI, lighting, ambiance, intégration d'assets, intégration d'animations, scripting de support et optimisation. Cette page sert de point d'entrée vers les différentes sections du portfolio, où chaque système est détaillé plus précisément.
+            </p>
+        </section>
+    </main>
+
+<script>
+    const currentPage = window.location.pathname.split("/").pop();
     const navLinks = document.querySelectorAll('nav a');
 
     navLinks.forEach(link => {
-        // Si le href du lien correspond à la page actuelle, ajoute la classe "active"
         if (link.getAttribute('href') === currentPage) {
             link.classList.add('active');
         }
