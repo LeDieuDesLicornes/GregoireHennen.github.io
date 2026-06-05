@@ -54,6 +54,13 @@
         .global-gifs { display: flex; gap: 20px; justify-content: center; margin-bottom: 20px; }
         .global-gifs img { width: 48%; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
         
+        /* Triple GIFs Layout for Flashlight */
+        .triple-gifs { display: flex; gap: 15px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+        .gif-card { flex: 1; min-width: 280px; background-color: #222; padding: 10px; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
+        .gif-card img { width: 100%; border-radius: 4px; margin-bottom: 10px; }
+        .gif-card p { margin: 0; font-size: 0.9em; color: #aaa; }
+        .gif-card span { font-weight: bold; }
+
         /* Centered Settings Image Style */
         .settings-img-container { text-align: center; margin: 20px 0 30px 0; }
         .settings-img-container img { max-width: 100%; width: 700px; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
@@ -228,6 +235,54 @@ for(int y=-1; y<=1; y++) {
 
             </div>
         </details>
+
+        <details class="shader-accordion">
+            <summary>Rendering: X-Ray Flashlight Layering (HDRP Custom Pass)</summary>
+            <div class="shader-content">
+                
+                <p style="text-align: center; font-size: 1.1em; color: #aaa;">To ensure optimal gameplay visibility, the player's flashlight needs to be rendered on top of every world object (X-Ray effect) while maintaining its internal structure and self-sorting perfectly.</p>
+                
+                <div class="triple-gifs">
+                    <div class="gif-card">
+                        <img src="Flashlight_NoCustomPass.gif" alt="No Custom Pass">
+                        <p><span>1. Sans Custom Pass :</span> La lampe est masquée par les décors et les murs du monde.</p>
+                    </div>
+                    <div class="gif-card">
+                        <img src="Flashlight_Pass1Only.gif" alt="Pass 1 Only">
+                        <p><span>2. Première Pass Seule :</span> Visible à travers tout, mais <span style="color: #ff7b72;">l'ordre d'affichage interne est erroné</span> (les composants se superposent mal).</p>
+                    </div>
+                    <div class="gif-card">
+                        <img src="Flashlight_BothPasses.gif" alt="Both Passes Active">
+                        <p><span>3. Les Deux Passes Actives :</span> La lampe apparaît toujours devant le monde, et sa géométrie est <span style="color: #00adb5;">rendue proprement</span>.</p>
+                    </div>
+                </div>
+                
+                <div class="settings-img-container">
+                    <p style="color: #00adb5; font-weight: bold; margin-bottom: 10px;">Architecture du double DrawRenderersCustomPass dans Unity HDRP :</p>
+                    <p style="font-size: 0.95em; color: #aaa; max-width: 800px; margin: 0 auto 15px auto; text-align: left;">
+                        Pour arriver à ce résultat impeccable, l'injection dans le pipeline utilise deux passes successives filtrant le Layer Mask <strong>"Flashlight"</strong> :
+                    </p>
+                    <img src="ImageCustomPassFlashlight.png" alt="Unity HDRP Custom Pass Flashlight Configuration">
+                </div>
+                
+                <hr style="border: 0; border-top: 1px solid #333; margin: 40px 0;">
+
+                <div class="tech-row">
+                    <div class="tech-desc">
+                        <h4 style="color: #00adb5; margin-top:0;">Pass 1: Rendre devant le monde</h4>
+                        <p>La première pass force l'affichage de la lampe par-dessus l'environnement. Elle vide le tampon de profondeur existant (<code>Clear Flags: Depth</code>) et utilise un Depth Test configuré sur <strong>"Always"</strong>.</p>
+                        <p>L'objet ignore ainsi la géométrie de la scène globale, mais ce traitement global détruit l'ordre de rendu des sous-éléments de la lampe elle-même.</p>
+                    </div>
+                    <div class="tech-desc">
+                        <h4 style="color: #00adb5; margin-top:0;">Pass 2: Tri et correction de l'objet</h4>
+                        <p>La deuxième pass vient corriger l'affichage interne. Configurée avec un <code>Clear Flags: None</code> pour conserver le contexte, elle réinitialise le Depth Test sur <strong>"Less Equal"</strong>.</p>
+                        <p>Cela permet aux différents sub-meshes de la lampe (lentille, corps, boutons) de se tester et de se trier à nouveau correctement les uns par rapport aux autres.</p>
+                    </div>
+                </div>
+
+            </div>
+        </details>
+
     </main>
 
 </body>
