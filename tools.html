@@ -5,77 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tools - Gregoire Hennen</title>
     <style>
-        nav a {
-    position: relative;
-    padding: 10px 20px;
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s;
-}
+    /* 1. Reset et base */
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a1a; color: #ffffff; margin: 0; padding: 0; text-align: center; }
+    header { padding: 40px 20px; background-color: #111111; }
+    h1 { margin: 0 0 10px 0; font-size: 2.5em; }
+    h2 { margin: 0 0 20px 0; color: #00adb5; font-weight: 400; }
+    
+    /* 2. Navigation "Tech Art" */
+    nav { margin-top: 20px; }
+    nav a { 
+        display: inline-block; 
+        color: #ffffff; 
+        text-decoration: none; 
+        padding: 10px 20px; 
+        margin: 0 10px; 
+        font-weight: bold; 
+        position: relative;
+        transition: color 0.3s;
+    }
 
-/* La ligne animée */
-nav a::after {
-    content: '';
-    position: absolute;
-    bottom: 5px;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: #00adb5;
-    transition: all 0.3s ease;
-}
+    /* Animation ligne sous le lien */
+    nav a::after {
+        content: '';
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: #00adb5;
+        transition: all 0.3s ease;
+    }
 
-/* État actif : la ligne s'étend */
-nav a.active::after, nav a:hover::after {
-    width: 70%;
-    left: 15%;
-}
+    /* Animation au survol */
+    nav a:hover { color: #00adb5; }
+    nav a:hover::after {
+        width: 70%;
+        left: 15%;
+    }
 
-nav a.active {
-    color: #00adb5; /* On illumine juste le texte */
-}
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a1a; color: #ffffff; margin: 0; padding: 0; text-align: center; }
-        header { padding: 40px 20px; background-color: #111111; }
-        h1 { margin: 0 0 10px 0; font-size: 2.5em; }
-        h2 { margin: 0 0 20px 0; color: #00adb5; font-weight: 400; }
-        nav { margin-top: 20px; }
-        nav a { display: inline-block; color: #ffffff; text-decoration: none; padding: 10px 20px; margin: 0 10px; border: 2px solid #00adb5; border-radius: 5px; font-weight: bold; transition: all 0.3s ease; }
-        nav a:hover { background-color: #00adb5; color: #1a1a1a; }
-        main { max-width: 1000px; margin: 40px auto; padding: 0 20px; text-align: left; }
+    /* État actif */
+    nav a.active { color: #00adb5; }
+    nav a.active::after {
+        width: 70%;
+        left: 15%;
+    }
 
-        h3 { text-align: center; margin-bottom: 30px; }
+    /* 3. Style spécifique aux outils */
+    main { max-width: 1000px; margin: 40px auto; padding: 0 20px; text-align: left; }
+    h3 { text-align: center; margin-bottom: 30px; }
+    
+    .tool-accordion { margin-bottom: 15px; border: 1px solid #333; border-radius: 8px; overflow: hidden; background-color: #222222; }
+    .tool-accordion summary { padding: 20px; font-size: 1.3em; font-weight: bold; color: #00adb5; cursor: pointer; list-style: none; position: relative; transition: background 0.3s ease; }
+    .tool-accordion summary:hover { background-color: #2b2b2b; }
+    .tool-accordion summary::after { content: '▼'; position: absolute; right: 20px; color: #00adb5; transition: transform 0.3s ease; }
+    .tool-accordion[open] summary::after { transform: rotate(180deg); }
+    .tool-content { padding: 20px; border-top: 1px solid #333; background-color: #1c1c1c; }
 
-        /* Accordion Style */
-        .tool-accordion { margin-bottom: 15px; border: 1px solid #333; border-radius: 8px; overflow: hidden; background-color: #222222; }
-        .tool-accordion summary { padding: 20px; font-size: 1.3em; font-weight: bold; color: #00adb5; cursor: pointer; list-style: none; position: relative; transition: background 0.3s ease; }
-        .tool-accordion summary:hover { background-color: #2b2b2b; }
-        .tool-accordion summary::after { content: '▼'; position: absolute; right: 20px; color: #00adb5; transition: transform 0.3s ease; }
-        .tool-accordion[open] summary::after { transform: rotate(180deg); }
-        
-        .tool-content { padding: 20px; border-top: 1px solid #333; background-color: #1c1c1c; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; background-color: #111; border-radius: 6px; overflow: hidden; }
+    th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #333; }
+    th { background-color: #00adb5; color: #1a1a1a; font-weight: bold; }
 
-        /* Table Style */
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; background-color: #111; border-radius: 6px; overflow: hidden; }
-        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #333; }
-        th { background-color: #00adb5; color: #1a1a1a; font-weight: bold; }
-
-        /* Side by Side Layout */
-        .tech-row { display: flex; gap: 25px; margin: 30px 0; align-items: center; }
-        .tech-desc { flex: 1; }
-        .tech-code { flex: 1; background-color: #0d1117; padding: 15px; border-radius: 6px; overflow-x: auto; border: 1px solid #30363d; }
-        
-        pre { margin: 0; }
-        code { font-family: 'Consolas', 'Courier New', Courier, monospace; color: #ff79c6; font-size: 0.9em; }
-        .c-keyword { color: #ff7b72; }
-        .c-var { color: #79c0ff; }
-
-        .center-img-container { text-align: center; margin: 25px 0; }
-        .center-img-container img { max-width: 100%; width: 700px; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        
-        .bullet-list { padding-left: 20px; line-height: 1.6; }
-        .bullet-list li { margin-bottom: 8px; }
-        .highlight { color: #00adb5; font-weight: bold; }
-    </style>
+    .tech-row { display: flex; gap: 25px; margin: 30px 0; align-items: center; }
+    .tech-desc { flex: 1; }
+    .tech-code { flex: 1; background-color: #0d1117; padding: 15px; border-radius: 6px; overflow-x: auto; border: 1px solid #30363d; }
+    pre { margin: 0; }
+    code { font-family: 'Consolas', 'Courier New', Courier, monospace; color: #ff79c6; font-size: 0.9em; }
+    
+    .center-img-container { text-align: center; margin: 25px 0; }
+    .center-img-container img { max-width: 100%; width: 700px; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+    
+    .bullet-list { padding-left: 20px; line-height: 1.6; }
+    .bullet-list li { margin-bottom: 8px; }
+    .highlight { color: #00adb5; font-weight: bold; }
+</style>
 </head>
 <body>
 
