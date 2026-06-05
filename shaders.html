@@ -12,6 +12,12 @@
 
     <style>
 
+        nav a.active {
+    background-color: #00adb5;
+    color: #1a1a1a;
+    border-color: #00adb5;
+}
+
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a1a; color: #ffffff; margin: 0; padding: 0; text-align: center; }
 
         header { padding: 40px 20px; background-color: #111111; }
@@ -570,7 +576,20 @@ for(int y=-1; y<=1; y++) {
 
     </main>
 
+<script>
+    // Récupère le nom de la page actuelle (ex: "shaders.html")
+    const currentPage = window.location.pathname.split("/").pop();
 
+    // Sélectionne tous les liens dans la nav
+    const navLinks = document.querySelectorAll('nav a');
+
+    navLinks.forEach(link => {
+        // Si le href du lien correspond à la page actuelle, ajoute la classe "active"
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
+        }
+    });
+</script>
 
 </body>
 
