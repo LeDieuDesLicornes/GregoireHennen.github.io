@@ -1,54 +1,235 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shaders - Gregoire Hennen</title>
-    
+    <title>VFX - Gregoire Hennen</title>
+
     <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
+
 <body>
-    
 
     <header>
         <h1>Gregoire Hennen</h1>
         <h2>Technical Artist</h2>
         <nav>
-            <a href="index.html">Accueil</a>
+            <a href="index.html">Home</a>
             <a href="vfx.html">VFX</a>
             <a href="shaders.html">Shaders</a>
             <a href="tools.html">Tools</a>
             <a href="scripts.html">Scripts</a>
             <a href="ui.html">UI</a>
             <a href="lighting.html">Lighting</a>
-            
         </nav>
     </header>
 
     <main>
-        <h3>Voici mes VFX</h3>
-        <p>Présentation de mes effets de particules et simulations réalisés durant la jam.</p>
-        <p>Voici l'effet de désintégration que j'ai programmé durant la deuxième semaine de la jam. J'ai utilisé le système de particules de l'éditeur ainsi qu'un shader de bruit personnalisé.</p>
+        <h3>VFX Systems & Gameplay Feedback</h3>
+        <p class="page-intro">
+            This section presents the visual effects I created in Unity to support player feedback and interaction readability. Each VFX is documented through its gameplay purpose, technical setup, Unity configuration and final in-game behavior.
+        </p>
 
-        <video controls style="max-width: 100%; width: 700px; border-radius: 8px; margin: 20px 0;">
-            <source src="vfx_video.mp4" type="video/mp4">
-            Votre navigateur ne supporte pas la lecture de vidéos.
-        </video>
+        <details class="ui-accordion" open>
+            <summary>Electric Breaker Feedback VFX</summary>
+            <div class="ui-content">
 
-        <h4>Recherches et concept art</h4>
-        <p>Voici les textures et les captures d'écran de mes tests de nodes :</p>
+                <p class="section-lead">
+                    This electric burst is triggered every time the player raises a circuit breaker. Its goal is to make the interaction feel more responsive: the breaker action is instantly reinforced by a short electrical spark, a bright trail and a quick fade-out.
+                </p>
 
-        <img src="image1.png" alt="Capture d'écran de mon shader" style="max-width: 100%; width: 700px; border-radius: 8px; margin: 10px 0;">
+                <div class="center-img-container">
+                    <img src="vfx-electric-breaker-demo.gif" alt="Electric VFX triggered when raising a circuit breaker">
+                    <p class="media-caption">Final in-game behavior: short electric feedback when the breaker is switched back on.</p>
+                </div>
+
+                <h4 class="ui-subtitle">VFX Breakdown</h4>
+                <div class="ui-feature-grid">
+                    <div class="ui-feature-card">
+                        <h5>Gameplay Trigger</h5>
+                        <p>The effect plays when the breaker is restored, giving the player immediate visual confirmation that the interaction worked.</p>
+                    </div>
+                    <div class="ui-feature-card">
+                        <h5>Particle Burst</h5>
+                        <p>The system uses a short burst instead of continuous emission, creating a controlled impact effect rather than a looping ambient spark.</p>
+                    </div>
+                    <div class="ui-feature-card">
+                        <h5>Trail Shape</h5>
+                        <p>Trails are enabled to stretch the particles into lightning-like strokes, making the effect sharper and more readable.</p>
+                    </div>
+                    <div class="ui-feature-card">
+                        <h5>Shader Support</h5>
+                        <p>A simple Shader Graph multiplies the lightning texture with vertex color, allowing the Particle System color gradient to control the final fade.</p>
+                    </div>
+                </div>
+
+                <hr class="ui-separator">
+
+                <div class="tech-row">
+                    <div class="tech-desc">
+                        <h4 style="color: #00adb5; margin-top:0;">1. Particle System Timing</h4>
+                        <p>
+                            The effect is built as a one-shot particle burst. The main module keeps the lifetime very short, while the emission module spawns a compact group of particles at the moment of interaction.
+                        </p>
+                        <p>
+                            This setup works well for a breaker because the VFX does not need to stay on-screen. It only needs to confirm the action and then disappear quickly.
+                        </p>
+                    </div>
+                    <div class="tech-code">
+<pre><code class="language-cpp">
+// Example gameplay hook
+public void RaiseBreaker()
+{
+    if (_electricBreakerVFX != null)
+    {
+        _electricBreakerVFX.Play();
+    }
+
+    RestorePowerState();
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="center-img-container">
+                    <img src="vfx-electric-particle-inspector-settings.png" alt="Unity Particle System settings for the electric breaker VFX">
+                    <p class="media-caption">Particle System setup: short lifetime, burst emission, sphere shape and yellow-to-transparent color over lifetime.</p>
+                </div>
+
+                <h4 class="ui-subtitle">Main Particle Settings</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Setting</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="highlight">Main</td>
+                            <td>Short lifetime and randomized start speed</td>
+                            <td>Creates a fast electrical pop instead of a slow smoke-like particle movement.</td>
+                        </tr>
+                        <tr>
+                            <td class="highlight">Emission</td>
+                            <td>Burst of particles at time 0</td>
+                            <td>Spawns the whole spark at once when the breaker is raised.</td>
+                        </tr>
+                        <tr>
+                            <td class="highlight">Shape</td>
+                            <td>Sphere radius</td>
+                            <td>Distributes the spark around the breaker contact point.</td>
+                        </tr>
+                        <tr>
+                            <td class="highlight">Color over Lifetime</td>
+                            <td>Yellow to transparent</td>
+                            <td>Gives the effect an electrical color while naturally fading it out.</td>
+                        </tr>
+                        <tr>
+                            <td class="highlight">Trails</td>
+                            <td>Particle trails with inherited particle color</td>
+                            <td>Transforms small particles into visible lightning strokes.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <hr class="ui-separator">
+
+                <div class="tech-row">
+                    <div class="tech-desc">
+                        <h4 style="color: #00adb5; margin-top:0;">2. Trail Renderer Setup</h4>
+                        <p>
+                            The Particle System renderer uses a dedicated trail material. Trails inherit the particle color, so the yellow fade defined in the Particle System also drives the opacity and timing of the lightning streaks.
+                        </p>
+                        <p>
+                            This keeps the look art-directable directly from the Inspector without having to create several different materials for timing variations.
+                        </p>
+                    </div>
+                    <div class="tech-code">
+<pre><code class="language-cpp">
+// Key idea
+// Particle Color -> Trail Color -> Shader Vertex Color
+// The same gradient controls intensity and alpha fade.</code></pre>
+                    </div>
+                </div>
+
+                <div class="center-img-container">
+                    <img src="vfx-electric-renderer-trails-settings.png" alt="Unity Particle System trails and renderer settings for the electric VFX">
+                    <p class="media-caption">Trail and renderer configuration: particle trails, stretched texture mode and custom lightning material.</p>
+                </div>
+
+                <div class="tech-row">
+                    <div class="tech-desc">
+                        <h4 style="color: #00adb5; margin-top:0;">3. Lightning Trail Shader</h4>
+                        <p>
+                            The shader samples a black and white lightning texture, multiplies it by the particle vertex color, then sends the result to Base Color and Emission. The alpha is also multiplied by the vertex alpha, which allows the Particle System gradient to fade the texture cleanly.
+                        </p>
+                        <p>
+                            This makes the shader lightweight and easy to reuse for other electric effects: the texture defines the lightning shape, while the Particle System controls color, intensity and disappearance.
+                        </p>
+                    </div>
+                    <div class="tech-code">
+<pre><code class="language-cpp">
+// Shader Graph logic
+FinalColor = LightningTexture.rgb * VertexColor.rgb;
+FinalAlpha = LightningTexture.a * VertexColor.a;
+Emission   = FinalColor * EmissionTint;</code></pre>
+                    </div>
+                </div>
+
+                <div class="center-img-container">
+                    <img src="vfx-electric-trail-shader-graph.png" alt="Shader Graph for the electric lightning trail material">
+                    <p class="media-caption">Shader Graph: texture mask combined with vertex color to support particle-driven tint and alpha.</p>
+                </div>
+
+                <h4 class="ui-subtitle">Portfolio Summary</h4>
+                <p>
+                    This VFX demonstrates a small but complete gameplay feedback loop: an interaction event triggers a one-shot Particle System, the particles generate readable lightning trails, and the shader keeps the effect flexible through vertex color and alpha control.
+                </p>
+
+            </div>
+        </details>
+
+        <details class="ui-accordion">
+            <summary>Second VFX</summary>
+            <div class="ui-content">
+                <p class="section-lead">
+                    Placeholder section for the second VFX. It is already structured like the first accordion, so the final media, Unity settings and technical breakdown can be added quickly once the second effect assets are ready.
+                </p>
+
+                <h4 class="ui-subtitle">Planned Breakdown</h4>
+                <div class="ui-feature-grid">
+                    <div class="ui-feature-card">
+                        <h5>Gameplay Purpose</h5>
+                        <p>Explain when the VFX is triggered and what feedback it gives to the player.</p>
+                    </div>
+                    <div class="ui-feature-card">
+                        <h5>Unity Setup</h5>
+                        <p>Document the Particle System, Shader Graph, material, lighting or animation modules used.</p>
+                    </div>
+                    <div class="ui-feature-card">
+                        <h5>Visual Direction</h5>
+                        <p>Describe the shape, color, timing and readability choices behind the effect.</p>
+                    </div>
+                    <div class="ui-feature-card">
+                        <h5>Optimization</h5>
+                        <p>Mention lifetime, particle count, material reuse or any production constraint.</p>
+                    </div>
+                </div>
+            </div>
+        </details>
+
     </main>
-<script>
-    // Récupère le nom de la page actuelle (ex: "shaders.html")
-    const currentPage = window.location.pathname.split("/").pop();
 
-    // Sélectionne tous les liens dans la nav
+<script>
+    const currentPage = window.location.pathname.split("/").pop();
     const navLinks = document.querySelectorAll('nav a');
 
     navLinks.forEach(link => {
-        // Si le href du lien correspond à la page actuelle, ajoute la classe "active"
         if (link.getAttribute('href') === currentPage) {
             link.classList.add('active');
         }
