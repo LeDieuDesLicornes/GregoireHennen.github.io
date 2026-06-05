@@ -3,81 +3,11 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Shaders - Gregoire Hennen</title>
-
-    <style>
-    /* 1. Reset et base */
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a1a; color: #ffffff; margin: 0; padding: 0; text-align: center; }
-    header { padding: 40px 20px; background-color: #111111; }
-    h1 { margin: 0 0 10px 0; font-size: 2.5em; }
-    h2 { margin: 0 0 20px 0; color: #00adb5; font-weight: 400; }
     
-    /* 2. Nouvelle Navigation "Tech Art" */
-    nav { margin-top: 20px; }
-    nav a { 
-        display: inline-block; 
-        color: #ffffff; 
-        text-decoration: none; 
-        padding: 10px 20px; 
-        margin: 0 10px; 
-        font-weight: bold; 
-        position: relative;
-        transition: color 0.3s;
-    }
-
-    /* Animation ligne sous le lien */
-    nav a::after {
-        content: '';
-        position: absolute;
-        bottom: 5px;
-        left: 50%;
-        width: 0;
-        height: 2px;
-        background: #00adb5;
-        transition: all 0.3s ease;
-    }
-
-    /* Animation au survol */
-    nav a:hover { color: #00adb5; }
-    nav a:hover::after {
-        width: 70%;
-        left: 15%;
-    }
-
-    /* État actif (Page actuelle) */
-    nav a.active { color: #00adb5; }
-    nav a.active::after {
-        width: 70%;
-        left: 15%;
-    }
-
-    /* 3. Reste du style (Accordion, Code, etc.) */
-    main { max-width: 1000px; margin: 40px auto; padding: 0 20px; text-align: left; }
-    h3 { text-align: center; margin-bottom: 30px; }
-    .shader-accordion { margin-bottom: 15px; border: 1px solid #333; border-radius: 8px; overflow: hidden; background-color: #222222; }
-    .shader-accordion summary { padding: 20px; font-size: 1.3em; font-weight: bold; color: #00adb5; cursor: pointer; list-style: none; position: relative; transition: background 0.3s ease; }
-    .shader-accordion summary:hover { background-color: #2b2b2b; }
-    .shader-accordion summary::after { content: '▼'; position: absolute; right: 20px; color: #00adb5; transition: transform 0.3s ease; }
-    .shader-accordion[open] summary::after { transform: rotate(180deg); }
-    .shader-content { padding: 20px; border-top: 1px solid #333; background-color: #1c1c1c; }
-    .tech-row { display: flex; gap: 25px; margin: 30px 0; align-items: center; }
-    .tech-desc { flex: 1; }
-    .tech-code { flex: 1; background-color: #0d1117; padding: 15px; border-radius: 6px; overflow-x: auto; border: 1px solid #30363d; }
-    pre { margin: 0; }
-    code { font-family: 'Consolas', 'Courier New', Courier, monospace; color: #ff79c6; font-size: 0.9em; }
-    .global-gifs { display: flex; gap: 20px; justify-content: center; margin-bottom: 20px; }
-    .global-gifs img { width: 48%; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-    .triple-gifs { display: flex; gap: 15px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
-    .gif-card { flex: 1; min-width: 280px; background-color: #222; padding: 10px; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
-    .gif-card img { width: 100%; border-radius: 4px; margin-bottom: 10px; }
-    .settings-img-container { text-align: center; margin: 20px 0 30px 0; }
-    .settings-img-container img { max-width: 100%; width: 700px; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-</style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
