@@ -1,43 +1,45 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shaders - Gregoire Hennen</title>
-    
-    <link rel="stylesheet" href="style.css">
-</head>
-    
-<body>
-    <header>
-        <h1>Gregoire Hennen</h1>
-        <h2>Technical Artist</h2>
-        <nav>
-            <a href="index.html">Accueil</a>
-            <a href="vfx.html">VFX</a>
-            <a href="shaders.html">Shaders</a>
-            <a href="tools.html">Tools</a>
-            <a href="scripts.html">Scripts</a>
-            <a href="lighting.html">Lighting</a>
-        </nav>
-    </header>
-    <main>
-        <h3>Voici mes Scripts</h3>
-        <p>Présentation de mes scripts d'automatisation et de logique faits pour la jam.</p>
-    </main>
-    <script>
-    // Récupère le nom de la page actuelle (ex: "shaders.html")
-    const currentPage = window.location.pathname.split("/").pop();
+<details class="tool-accordion">
+    <summary>Script: Flashlight Battery & Mechanics (C#)</summary>
+    <div class="tool-content">
+        <p style="text-align: center; font-size: 1.1em; color: #aaa;">
+            This system manages the flashlight's battery life, flickering behavior, and recharging mechanics using a state-machine approach.
+        </p>
 
-    // Sélectionne tous les liens dans la nav
-    const navLinks = document.querySelectorAll('nav a');
+        <div class="global-gifs">
+            <img src="Flashlight_Flickering.gif" alt="Flicker Effect">
+            <img src="Flashlight_Reloading.gif" alt="Reloading Mechanics">
+        </div>
 
-    navLinks.forEach(link => {
-        // Si le href du lien correspond à la page actuelle, ajoute la classe "active"
-        if (link.getAttribute('href') === currentPage) {
-            link.classList.add('active');
-        }
-    });
-</script>
-</body>
-</html>
+        <div class="tech-row">
+            <div class="tech-desc">
+                <h4 style="color: #00adb5;">1. Dynamic Flickering</h4>
+                <p>The script uses <code class="language-cpp">Coroutine</code> sequences to simulate power loss. By analyzing the current battery percentage against a <code class="language-cpp">List</code> of thresholds, it triggers randomized blackout durations and intensity drops.</p>
+            </div>
+            <div class="tech-code">
+<pre><code class="language-csharp">
+private IEnumerator FlickerRoutine(FlickerSettings settings) {
+    _isFlickering = true;
+    yield return new WaitForSeconds(Random.Range(settings.minDelay, settings.maxDelay));
+    // ... logic for intensity loops
+    _isFlickering = false;
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="tech-row">
+            <div class="tech-desc">
+                <h4 style="color: #00adb5;">2. Recharge Logic</h4>
+                <p>The reload system handles the transition from "empty" to "fully charged", triggering specific audio loops and enabling player capabilities (like the flashbang) once the battery hits a specific threshold.</p>
+            </div>
+            <div class="tech-code">
+<pre><code class="language-csharp">
+public void ReloadBattery() {
+    if (currentBattery < _maxBattery) {
+        currentBattery += _batteryGainPerSecond * Time.deltaTime;
+        if (currentBattery >= reloadMinimumForFlashBang) player.canFlashBang = true;
+    }
+}</code></pre>
+            </div>
+        </div>
+    </div>
+</details>
