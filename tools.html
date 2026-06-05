@@ -5,10 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tools - Gregoire Hennen</title>
     <style>
-        nav a.active {
-    background-color: #00adb5;
-    color: #1a1a1a;
+       nav a {
+    border: 1px solid transparent;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+nav a.active {
     border-color: #00adb5;
+    background: rgba(0, 173, 181, 0.1);
+    box-shadow: 0 0 10px rgba(0, 173, 181, 0.3);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a1a; color: #ffffff; margin: 0; padding: 0; text-align: center; }
         header { padding: 40px 20px; background-color: #111111; }
