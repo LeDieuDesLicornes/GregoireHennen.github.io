@@ -1,101 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scripts - Gregoire Hennen</title>
+<details class="shader-accordion" open>
+    <summary>Flashlight Battery & Energy Management System</summary>
+    <div class="shader-content">
+        
+        <p>Ce script gère l'intégralité du cycle de vie énergétique de la lampe torche. Au-delà d'une simple gestion de valeur (0-100%), le système utilise des <strong>Coroutines</strong> et des structures de données personnalisées pour coupler mécaniques de gameplay et retour visuel intuitif.</p>
+
+        <div class="tech-row">
+            <div class="tech-desc">
+                <h4 style="color: #00adb5;">1. Système de Clignotement Dynamique</h4>
+                <p>Pour éviter une interface trop chargée, l'état de la batterie est communiqué via un comportement instable de la lumière. Le script utilise un tableau de <code class="language-csharp">FlickerSettings</code> configurable via l'inspecteur, permettant de définir des comportements distincts par paliers de batterie.</p>
+                <img src="image_9ac97d.png" style="width: 100%; border-radius: 6px; margin: 10px 0;" alt="Inspecteur Flicker Configuration">
+            </div>
+            <div class="tech-code">
+<pre><code class="language-csharp">
+private void CheckForRandomFlicker() {
+    foreach (var config in _flickerConfigs) {
+        if (currentBattery > config.minBatteryThreshold && currentBattery <= config.maxBatteryThreshold) {
+            StartCoroutine(FlickerRoutine(config));
+            return;
+        }
+    }
+}
+
+private IEnumerator FlickerRoutine(FlickerSettings settings) {
+    _isFlickering = true;
+    yield return new WaitForSeconds(Random.Range(settings.minDelay, settings.maxDelay));
     
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
-</head>
+    // Séquence de clignotement aléatoire
+    int flickers = Random.Range(3, 6);
+    for (int i = 0; i < flickers; i++) {
+        SetLightIntensity(Random.Range(settings.flickerMinIntensityPercent, 0.4f));
+        yield return new WaitForSeconds(Random.Range(0.05f, 0.15f));
+        SetLightIntensity(1.0f);
+        yield return new WaitForSeconds(Random.Range(0.05f, 0.1f));
+    }
+    _isFlickering = false;
+}</code></pre>
+            </div>
+        </div>
+        <div style="text-align: center; margin-bottom: 30px;">
+            <img src="Flashlight_Flickering.gif" style="max-width: 600px; border-radius: 6px;" alt="Flickering Preview">
+        </div>
 
-<body>
+        <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
 
-    <header>
-        <h1>Gregoire Hennen</h1>
-        <h2>Technical Artist</h2>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="vfx.html">VFX</a>
-            <a href="shaders.html">Shaders</a>
-            <a href="tools.html">Tools</a>
-            <a href="scripts.html">Scripts</a>
-            <a href="lighting.html">Lighting</a>
-        </nav>
-    </header>
-
-    <main>
-        <h3>Core Gameplay Scripts</h3>
-
-        <details class="shader-accordion" open>
-            <summary>Flashlight Battery & Energy Management System</summary>
-            <div class="shader-content">
-                
-                <p>Ce script a été développé afin de gérer le fonctionnement énergétique de la lampe torche utilisée durant le développement du prototype. Bien qu'il soit entièrement fonctionnel, ce système a principalement été utilisé comme outil de débogage et de test.</p>
-
-                <div class="global-gifs">
-                    <div class="gif-card">
-                        <img src="Flashlight_Reloading.gif" alt="Flashlight Reloading">
-                        <p><strong>Recharge :</strong> Mécanique de récupération d'énergie avec rétroaction sonore.</p>
-                    </div>
-                    <div class="gif-card">
-                        <img src="Flashlight_Flickering.gif" alt="Flashlight Flickering">
-                        <p><strong>Clignotement :</strong> Indicateur visuel d'instabilité selon le niveau de batterie.</p>
-                    </div>
-                </div>
-
-                <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
-
-                <h4>Principe général</h4>
-                <p>La lampe repose sur une valeur de batterie (0-100%). Lorsqu'elle est active, elle consomme cette énergie, impactant directement son comportement. Le système synchronise la <strong>Spot Light</strong> principale et une <strong>Point Light</strong> secondaire pour créer un rendu cohérent, tout en gérant le <strong>Mesh Collider</strong> pour assurer que les mécaniques de jeu (interactions) restent fidèles à l'état de la lampe.</p>
-
-                <h4>Système de clignotement dynamique</h4>
-                <p>L'une des forces du système est l'utilisation de la lumière comme indicateur intuitif. À mesure que la batterie chute, le script active des coroutines de clignotement basées sur des plages de seuils définies :</p>
-                <ul class="bullet-list">
-                    <li>Délai et intensité aléatoires pour simuler une alimentation défaillante.</li>
-                    <li>Fréquence de clignotement croissante en fonction de l'épuisement.</li>
-                    <li>Extinctions temporaires pour forcer le joueur à réagir.</li>
-                </ul>
-
-                <h4>Gestion des ressources et Debug</h4>
-                <p>Le script intègre une suite d'événements sonores (on/off, recharge, batterie pleine) et une interface de débogage affichant en temps réel le pourcentage et la barre de progression. Cette interface a permis un équilibrage rapide des multiplicateurs de consommation et des seuils de recharge.</p>
-
-                <div class="tech-row">
-                    <div class="tech-desc">
-                        <h4 style="color: #00adb5;">Logique de Transition (Reload)</h4>
-                        <p>Le système gère l'état de charge via des transitions d'états permettant de déclencher des boucles sonores spécifiques (métal, charge, confirmation).</p>
-                    </div>
-                    <div class="tech-code">
+        <div class="tech-row">
+            <div class="tech-desc">
+                <h4 style="color: #00adb5;">2. Mécanique de Recharge (ReloadBattery)</h4>
+                <p>La méthode <code class="language-csharp">ReloadBattery()</code> utilise une logique d'états pour gérer la progression. Elle vérifie si le joueur vient d'initier la charge (déclenchement des sons) et ajuste dynamiquement l'intensité lumineuse et les propriétés du joueur (comme le <em>FlashBang</em>) une fois certains seuils atteints.</p>
+            </div>
+            <div class="tech-code">
 <pre><code class="language-csharp">
 public void ReloadBattery() {
     if (!_isReloading && currentBattery < _maxBattery) {
         _isReloading = true;
-        // Déclenchement audio et activation boucle
+        startCharginMetalLoopAudioSource.Play();
+        if (_noiseEmitter != null) _noiseEmitter.PlayNoiseWithDelay(2.3f);
     }
-    // Calcul de la recharge progressive
-    currentBattery += _batteryGainPerSecond * Time.deltaTime;
-}</code></pre>
-                    </div>
-                </div>
 
-                <h4>Limites et Évolutions</h4>
-                <p>Si ce système était parfait pour le prototypage, il reste une solution de développement. Pour une version finale, le passage à un système d'UI dédié et une gestion de batterie plus complexe (types de consommables) serait recommandé.</p>
+    if (currentBattery < _maxBattery) {
+        currentBattery += _batteryGainPerSecond * Time.deltaTime;
+        if (currentBattery >= reloadMinimumForFlashBang) player.canFlashBang = true;
+    }
 
-            </div>
-        </details>
-
-    </main>
-
-<script>
-    const currentPage = window.location.pathname.split("/").pop();
-    const navLinks = document.querySelectorAll('nav a');
-    navLinks.forEach(link => {
-        if (link.getAttribute('href') === currentPage) {
-            link.classList.add('active');
+    if (currentBattery >= _maxBattery) {
+        currentBattery = _maxBattery;
+        if (!_wasFullyCharged) {
+            _wasFullyCharged = true;
+            fullyChargedAudioSource.Play();
         }
-    });
-</script>
-</body>
-</html>
+    }
+}</code></pre>
+            </div>
+        </div>
+        <div style="text-align: center;">
+            <img src="Flashlight_Reloading.gif" style="max-width: 600px; border-radius: 6px;" alt="Reloading Preview">
+        </div>
+
+    </div>
+</details>
