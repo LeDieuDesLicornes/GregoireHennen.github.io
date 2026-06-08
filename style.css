@@ -387,7 +387,6 @@ h4[style] {
     box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 18px 40px rgba(0,0,0,.25);
 }
 .tech-code::before {
-    content: "C# / Unity";
     display: block;
     color: var(--accent);
     font-family: var(--mono);
@@ -397,7 +396,7 @@ h4[style] {
     margin-bottom: 10px;
     opacity: .9;
 }
-.tech-code:has(img)::before { content: "Inspector / Graph"; }
+.tech-code:has(img)::before { }
 pre { margin: 0; padding: 0; background: transparent !important; }
 code {
     font-family: var(--mono);
